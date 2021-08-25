@@ -24,4 +24,5 @@ const IndexStyled = styled.a`
             color: inherit;
         }
 `
+
 ReactDOM.render(<App />, document.getElementById('root'));

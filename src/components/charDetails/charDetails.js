@@ -10,6 +10,20 @@ const ErrorSpan = styled.span`
     text-align: center;
 `
 
+
+const Field = ({char, field, label}) => {
+    return (
+        <li className="list-group-item">
+            <Term>{label}</Term>
+            <span>{char[field]}</span>
+        </li>
+    )
+}
+
+export {
+    Field
+}
+
 export default class CharDetails extends Component {
     
     gotService = new gotService();
@@ -41,29 +55,18 @@ export default class CharDetails extends Component {
     render() {
 
         if (!this.state.char) return <ErrorSpan className='select-error'>Please, select a character</ErrorSpan>
-
-        const {name, gender, born, died, culture} = this.state.char;
+        const {char} = this.state;
+        const {name} = char;
 
         return (
             <RandomBlock>
                 <H4>{name}</H4>  
                 <Ul className="list-group list-group-flush">
-                    <li className="list-group-item">
-                        <Term>Gender</Term>
-                        <span>{gender}</span>
-                    </li>
-                    <li className="list-group-item">
-                        <Term>Born</Term>
-                        <span>{born}</span>
-                    </li>
-                    <li className="list-group-item">
-                        <Term>Died</Term>
-                        <span>{died}</span>
-                    </li>
-                    <li className="list-group-item">
-                        <Term>Culture</Term>
-                        <span>{culture}</span>
-                    </li>
+                    {
+                        React.Children.map(this.props.children, (child) => {
+                            return React.cloneElement(child, {char})
+                        })
+                    }
                 </Ul>
             </RandomBlock>
         );
